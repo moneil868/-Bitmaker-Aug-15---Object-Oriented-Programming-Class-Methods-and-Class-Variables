@@ -3,7 +3,7 @@
 # Create a class called BankAccount.
 class BankAccount
   # Add a class variable called @@interest_rate that is a float representing the interest rate for all the accounts in the bank. This is a class variable because it is the same value for all accounts.
-  @@interest_rate = 0.0
+  @@interest_rate = 1.0/100
 
   # Add another class variable called @@accounts that starts as an empty array. This will eventually store the list of all bank accounts in the bank.
   @@accounts = []
@@ -18,8 +18,8 @@ class BankAccount
     @balance
   end
 
-  def change_balance
-
+  def change_balance=(balance)
+    @balance = balance
   end
 
   # Add an instance method called deposit that accepts a number as an argument and adds that amount to the account's balance.
@@ -44,16 +44,22 @@ class BankAccount
   # Add a class method called total_funds that returns the sum of all balances across all accounts in @@accounts.
   # This needs to be a class method because it does not pertain to any single, specific account.
   def self.total_funds
-    total = @@accounts.sum
-    return total
+    total_funds = 0
+    @@accounts.each do |balances|
+      total_funds += balances.get_balance
+    end
+    return total_funds
   end
 
   # Add a class method called interest_time that iterates through all accounts and increases their balances according to @@interest_rate.
-  def interest_rate(accounts)
-    accounts.each do |account|
-      interest_gained = @@balance * @@interest_rate
-      return interest_rate
+  def self.interest_time
+    @@accounts.map do |account|
+      balance = account.get_balance
+      interest_gained = balance * @@interest_rate
+      balance += interest_gained
+      account.change_balance=(balance)
     end
+
   end
 
 
@@ -64,5 +70,28 @@ end
 my_account = BankAccount.create
 your_account = BankAccount.create
 
-puts my_account.inspect
-puts your_account.inspect
+my_account.deposit(200)
+your_account.deposit(1000)
+print "This is the account balance for my_account: "
+puts my_account.get_balance
+print "This is the account balance for your_account: "
+puts your_account.get_balance
+print "This displays total funds across all accounts: "
+puts BankAccount.total_funds
+puts
+puts "Interest applied"
+BankAccount.interest_time
+# puts
+print "This is the account balance for my_account plus interest: "
+puts my_account.get_balance # 202.0
+# puts
+print "This is the account balance for your_account plus interest: "
+puts your_account.get_balance # 1010.0
+# puts
+print "This displays total funds across all accounts including interest: "
+puts BankAccount.total_funds # 1212.0
+puts
+puts "Withdraw $50"
+my_account.withdraw(50)
+puts my_account.get_balance # 152.0
+puts BankAccount.total_funds # 1162.0
