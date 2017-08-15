@@ -35,7 +35,7 @@ class BankAccount
 
 
   # Add a class method called create that calls BankAccount.new and adds the new object to @@accounts so that we can find it again in the future. This method should return the new account object. This needs to be a class method because at the time we run it there is no single, specific account object that we are working on.
-  def create
+  def self.create
     new_account = BankAccount.new
     @@accounts << new_account
     return new_account
@@ -43,7 +43,7 @@ class BankAccount
 
   # Add a class method called total_funds that returns the sum of all balances across all accounts in @@accounts.
   # This needs to be a class method because it does not pertain to any single, specific account.
-  def total_funds
+  def self.total_funds
     total = @@accounts.sum
     return total
   end
@@ -58,3 +58,11 @@ class BankAccount
 
 
 end
+
+
+#Test Output
+my_account = BankAccount.create
+your_account = BankAccount.create
+
+puts my_account.inspect
+puts your_account.inspect
