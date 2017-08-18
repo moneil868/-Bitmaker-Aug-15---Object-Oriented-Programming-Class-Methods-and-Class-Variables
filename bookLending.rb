@@ -8,7 +8,7 @@ class Book
 
   # Your class will also need reader and writer methods for due_date.
   def self.due_date
-    @due_date
+    @@due_date
   end
 
   def self.due_date=(due_date)
@@ -25,7 +25,7 @@ class Book
 
   # a class method current_due_date
   def self.current_due_date
-    Time.now + 60
+    Time.now + 6000
   end
 
   # a class method overdue_books
@@ -75,7 +75,7 @@ class Book
     # This instance method is how a book is taken out of the library. Otherwise, use current_due_date to set the due_date of the book and move it from the collection of available books to the collection of books on loan, then return true.
     # This method should use lent_out? to check if the book is already on loan,
     if self.lent_out? == false
-      @due_date = Book.current_due_date
+      @@due_date = Book.current_due_date
       @@on_shelf.delete(self)
       @@on_loan << self
       return true
