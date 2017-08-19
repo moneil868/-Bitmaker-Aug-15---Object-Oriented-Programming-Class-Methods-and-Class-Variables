@@ -20,6 +20,8 @@ class Zombie
     increase_plague_level
   end
 
+
+
   def self.default_strength
     @@default_strength
   end
@@ -44,10 +46,16 @@ class Zombie
 
   # This class method should generate a random number between 0 and 2 and increase @@plague_level by that amount.
   def self.increase_plague_level
-    random_number = rand(2)
+
+    # Change the increase_plague_level method so that the amount the plague level increases is somehow based on the number of zombies in the horde, instead of being completely random.
+    random_number = @@horde.length
     @@plague_level += random_number
   end
 
+  # Add a method called deadliest_zombie that returns the zombie that has the highest combination of speed and strength. Should this be a class method or an instance method?
+  def self.deadliest_zombie
+      #To be completed
+  end
 
   #Instance Methods
 
@@ -83,6 +91,18 @@ class Zombie
 
   end
 
+  def combination
+    @speed + @strength
+  end
+
+  def get_speed
+    @speed
+  end
+
+  def get_strength
+    @strength
+  end
+
   def outrun_zombie?
     @speed > rand(@@max_speed)
   end
@@ -94,10 +114,11 @@ class Zombie
 end
 
 puts "============================+ TESTS +=========================="
-puts Zombie.all.inspect
+Zombie.all.inspect
 Zombie.new_day
-puts Zombie.all.inspect
+Zombie.all.inspect
 zombie1 = Zombie.all[0]
 zombie2 = Zombie.all[1]
 zombie3 = Zombie.all[2]
-puts zombie1.encounter
+zombie1.encounter
+puts Zombie.all.inspect
